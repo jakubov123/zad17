@@ -65,12 +65,12 @@ animation: animatedBackground 10s linear infinite;
         count ++;
         document.getElementById('visitor_count').innerHTML = count;
     }
-    IncremeCounter();
+    
     fetch('counter.txt')
         .then(response => response.text())
         .then(data => {
             counter = parseInt(data) || 0;
-            incrementCounter();
+            IncremeCounter();
         })
         .catch(error => console.error('Błąd pobierania danych:', error));
  
