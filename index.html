@@ -66,7 +66,22 @@ animation: animatedBackground 10s linear infinite;
         document.getElementById('visitor_count').innerHTML = count;
     }
     IncremeCounter();
-
+    fetch('counter.txt')
+        .then(response => response.text())
+        .then(data => {
+            counter = parseInt(data) || 0;
+            incrementCounter();
+        })
+        .catch(error => console.error('Błąd pobierania danych:', error));
+ 
+    // Inkrementuj licznik przy każdym załadowaniu strony
+    window.addEventListener('beforeunload', () => {
+        // Zapisz liczbę odwiedzin do pliku na serwerze
+        fetch('save_counter.php', {
+            method: 'POST',
+            body: counter.toString(),
+        });
+    });
 </script>
 </body>
 </html>
