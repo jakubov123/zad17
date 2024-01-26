@@ -60,28 +60,19 @@ animation: animatedBackground 10s linear infinite;
     <img src="1.gif" alt="skier" style="width: 400px; height: 300px;">
     <div class="snow"></div>
 <script>
-    let count = 0;
-    function IncremeCounter(){
-        count ++;
-        document.getElementById('visitor_count').innerHTML = count;
-    }
-    
-    fetch('counter.txt')
+document.addEventListener('DOMContentLoaded', function() {
+    // Pobranie elementu, który będzie wyświetlał liczbę odwiedzin
+    var counterElement = document.getElementById('counter');
+
+    // Wywołanie pliku PHP, aby uzyskać aktualną liczbę odwiedzin
+    fetch('counter.php')
         .then(response => response.text())
-        .then(data => {
-            counter = parseInt(data) || 0;
-            IncremeCounter();
+        .then(count => {
+            // Aktualizacja wartości na stronie
+            counterElement.textContent = count;
         })
-        .catch(error => console.error('Błąd pobierania danych:', error));
- 
-    // Inkrementuj licznik przy każdym załadowaniu strony
-    window.addEventListener('beforeunload', () => {
-        // Zapisz liczbę odwiedzin do pliku na serwerze
-        fetch('save_counter.php', {
-            method: 'POST',
-            body: counter.toString(),
-        });
-    });
+        .catch(error => console.error('Błąd pobierania liczby odwiedzin:', error));
+});
 </script>
 </body>
 </html>
